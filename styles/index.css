@@ -1,0 +1,247 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --background-color: #2A2A2E;
+    --danger-color: #dc3545;
+    --background-color-hover: rgba(180, 180, 180, 0.2);
+    --background-card-content: #38383D;
+    --card-text: rgba(249, 249, 250, 0.8);
+    --border-modal: rgba(62, 72, 82, 1);
+    --bg-modal: rgba(67, 67, 64, 1);
+    --btn-outline-color: rgba(112, 176, 255, 0.9);
+    --btn-outline-bg: rgba(67, 67, 64, 0.2);
+}
+
+body{
+    background-color: var(--background-color);
+    font-family: sans-serif;
+    color: var(--card-text);
+}
+
+.wrap{
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+
+    position: relative;
+
+}
+
+#popup{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(0, 0, 0, 0.6);
+    /* background-color: var(--background-color); */
+    display: none;
+}
+
+#popup-window{
+    /* height: 100px; */
+    padding: 50px;
+    width: 500px;
+    border: 1px solid var(--border-modal); 
+    background-color: var(--bg-modal);
+    border-radius: 5px;
+}
+
+#popup-window input{
+    width: 100%;
+    height: 38px;
+    font-size: 16px;
+    margin-bottom: 20px;
+    border: none;
+
+    background-color: var(--background-color);
+    color: #fff;
+}
+
+#popup-window .line{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+#btn-save{
+    margin-left: 15px;
+}
+
+.popup-title{
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.main{
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.header{
+    /* border: 1px solid #fff; */
+    margin-top: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header .title{
+    font-size: 32px;
+}
+
+
+.btn-outline{
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    color: var(--btn-outline-color);
+    border: 1px solid var(--btn-outline-color);
+    background-color: var(--btn-outline-bg);
+}
+
+.btn-primary{
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+
+    color: #fff;
+    background-color: var(--btn-outline-color);
+
+}
+
+.btn-add{
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+    background-color: var(--btn-outline-color);
+}
+
+.btn-rm{
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 32px;
+    background-color: var(--danger-color);
+
+}
+
+.content{
+    /* border: 1px solid #fff; */
+
+    margin-top: 20px;
+
+    display: grid;
+    grid-template-columns: 180px 180px 180px 180px;
+    grid-gap: 30px;
+
+}
+
+.content a {
+    text-decoration: none;
+    color: var(--card-text);
+    display: flex;
+    flex: 1;
+    width: 100%
+}
+
+.card{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+    width: 180px;
+    height: 130px;
+    background-color: var(--background-card-content);
+    border-radius: 8px;
+
+}
+
+.card-content{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.card-content .label{
+    width: 100%;
+    text-align: center;
+    font-size: 16px;
+    word-wrap: break-word;
+
+}
+
+.card-footer{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    position: absolute;
+    bottom: 0;
+}
+
+.btn-ctrl{
+    padding: 5px;
+    width: 50%;
+}
+/* 
+@media screen and (max-width: 900px){
+
+    .wrap{
+        margin: 100px 0px;
+    }
+
+    .content{
+        display: grid;
+        grid-template-columns: 100px 100px 100px 100px ;
+        grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px;
+        grid-gap: 10px;
+    }
+}
+
+@media screen and (max-width: 450px){
+
+    .content{
+        display: grid;
+        grid-template-columns: 100px 100px  ;
+        grid-template-rows: 100px 100px 100px 100px 100px 100px 100px 100px 100px 100px;
+        grid-gap: 10px;
+    }
+
+}
+
+
+@media screen and (max-height: 640px){
+    .wrap{
+        margin: 200px 0px;
+    }
+}
+
+@media screen and (max-height: 450px){
+    .wrap{
+        margin: 250px 0px;
+    }
+}
+ */
+
+
+
+
+
