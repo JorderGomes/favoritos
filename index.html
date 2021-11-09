@@ -30,12 +30,41 @@
         <div id="popup">
             <div id="popup-window">
                 <p class="popup-title">Adicionar novo favorito</p>
-                <input type="text" name="" id="new-bookmark-input">
+                <input type="text" name="" id="new-bookmark-input" class="bookmark-input">
                 <div class="line">
                     <button id="btn-cancel" class="btn-outline">Cancelar</button>
                     <button id="btn-save" class="btn-primary">Salvar</button>
                 </div>
+            </div>
+
+            <div id="popup-edit">
+                <p class="popup-title">
+                    Editar este favorito
+                </p>
                 
+                <label for="edit-bookmark-name">Nome</label>
+                <input type="text" 
+                    id="edit-bookmark-name" 
+                    class="bookmark-input">
+                
+                <label for="edit-bookmark-link">Link</label>
+                <input type="text" 
+                    id="edit-bookmark-link" 
+                    class="bookmark-input">
+
+                <div class="line">
+                    <button 
+                        id="btn-cancel-edit" 
+                        class="btn-outline">
+                            Cancelar
+                    </button>
+                    
+                    <button 
+                        id="btn-save-edit" 
+                        class="btn-primary">
+                            Salvar
+                    </button>
+                </div>
             </div>
         </div>
         

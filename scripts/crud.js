@@ -6,6 +6,7 @@ function BookMark(id, nome, url){
 }
 
 var bookMarkList = [];
+var bookMarkData;
 var content;
 var nome = '';
 
@@ -16,6 +17,8 @@ var removeAll = document.getElementById("remove-all");
 var saveBookMark = document.getElementById("btn-save");
 var cancelModal = document.getElementById("btn-cancel");
 
+var cancelEdit = document.getElementById("btn-cancel-edit");
+var saveEdit = document.getElementById("btn-save-edit");
 
 var inputBookmark = document.getElementById("new-bookmark-input");
 
@@ -51,6 +54,11 @@ function init(){
         //  console.log(bookMarkList);
     }
     // getTitle();
+
+
+
+  
+
     showBookMarkList();
 }
 init();
@@ -64,28 +72,94 @@ function setBookMarkList(){
 // Flip modal 
 addLink.addEventListener("click", function(e) {
     document.getElementById("popup").style.display = 'flex';
+    document.getElementById("popup-window").style.display = 'block';
+
 });
 
 cancelModal.addEventListener("click", function(e){
     document.getElementById("popup").style.display = 'none';
     inputBookmark.value = '';
+    document.getElementById("popup-window").style.display = 'none';
+
 });
 
+function removeBookmark(event){
+    let botao_remover = event.target;
+      console.log(botao_remover.id);
+      let botao_remover_dados = botao_remover.id.split('.');
+
+      let cardAtual = 
+          document.getElementById(botao_remover_dados[1]);
+
+      content.removeChild(cardAtual);
+      removeData(botao_remover_dados[1]);
+}
 document.querySelectorAll('.btn-rmv').forEach((el) =>
-  el.addEventListener('click', (event) => {
-        let botao_remover = event.target;
-        console.log(botao_remover.id);
-        let botao_remover_dados = botao_remover.id.split('.');
-        // console.log(botao_remover_dados);
+el.addEventListener('click', removeBookmark ));
 
-        let cardAtual = 
-            document.getElementById(botao_remover_dados[1]);
+function editBookMark(event){
+    let botao_editar = event.target;
+    let botao_editar_dados = 
+        botao_editar.id.split('.');
+    let cardAtual = 
+        document.getElementById(botao_editar_dados[1]);
 
-        content.removeChild(cardAtual);
-        removeData(botao_remover_dados[1]);
+    document.getElementById("popup").style.display = 'flex';
+    document.getElementById("popup-edit").style.display = 'block';
 
-  })
-);
+    bookMarkData = getDatabyId(botao_editar_dados[1]);
+
+    document.getElementById("edit-bookmark-name")
+        .value = bookMarkData.nome;
+    document.getElementById("edit-bookmark-link")
+        .value = bookMarkData.url;
+}
+document.querySelectorAll('.btn-edit').forEach((el) =>
+el.addEventListener('click', editBookMark));
+
+cancelEdit.addEventListener('click', function(e){
+  document.getElementById("popup")
+      .style.display = 'none';
+  document.getElementById("popup-edit")
+      .style.display = 'none';
+
+})
+
+saveEdit.addEventListener('click', function(e){
+  let newName = document.getElementById("edit-bookmark-name")
+  .value;
+  let newUrl = document.getElementById("edit-bookmark-link")
+  .value;
+  setData(bookMarkData.id, newName, newUrl);
+
+});
+
+
+function getDatabyId(id){
+    for (let i = 0; i < bookMarkList.length; i++){
+        if (bookMarkList[i].id === id){
+            return bookMarkList[i];
+        }
+    }
+}
+
+function setData(id, nome, url){
+    let posicao;
+    for (let i = 0; i < bookMarkList.length; i++){
+        if (bookMarkList[i].id === id){
+            posicao = i;
+        }
+    }
+    bookMarkList[posicao].nome = nome;
+    bookMarkList[posicao].url = url;
+    setBookMarkList();
+    showBookMarkList();
+    document.getElementById("popup")
+        .style.display = 'none';
+    document.getElementById("popup-edit")
+        .style.display = 'none';
+}
+
 
 // crud
 
@@ -107,26 +181,29 @@ saveBookMark.addEventListener("click", function(e){
     bookMarkList.push(newBookMark);
     setBookMarkList();
     let pos = bookMarkList.length - 1;
-    // createCard(id, bookMarkList.length - 1);
-    createCard(bookMarkList[pos]);
+    init();
     inputBookmark.value = '';
     document.getElementById("popup").style.display = 'none';    
 });
 
 
 
-// removeAll.addEventListener("click", function(e){
-//     bookMarkList = [];
-//     setBookMarkList();
-// });
+
 
 function showBookMarkList(){
-    
+    cleanBookMarkList();
     bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList'));
     for (let item in bookMarkList){
-        // createCard(item);
         createCard(bookMarkList[item]);
     }
+
+}
+
+function cleanBookMarkList(){
+
+    while (content.firstChild) {
+        content.removeChild(content.lastChild);
+      }
 
 }
 
@@ -203,14 +280,14 @@ function createCard(item){
     editButton.id = 'edit.' + item.id;
     editButton.classList.add('btn-edit');
     editButton.classList.add('btn-ctrl');
-
+    editButton.addEventListener('click', editBookMark);
 
     let removeButton = document.createElement('button');
     removeButton.innerHTML = 'excluir';
     removeButton.id = 'remove.' + item.id;
     removeButton.classList.add('btn-rmv');
     removeButton.classList.add('btn-ctrl');
-
+    removeButton.addEventListener('click', removeBookmark);
 
     label.innerHTML = item.nome;
 
@@ -220,7 +297,6 @@ function createCard(item){
     cardFooter.appendChild(editButton);
     cardFooter.appendChild(removeButton);
     card.appendChild(cardFooter);
-    // link.appendChild(card);
     content.appendChild(card);
 }
 
