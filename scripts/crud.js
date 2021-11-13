@@ -22,18 +22,21 @@ var saveEdit = document.getElementById("btn-save-edit");
 
 var inputBookmark = document.getElementById("new-bookmark-input");
 
+
+
 function getTitle (url){
     let splitedUrl = url.split('/');
     let titleFull = '';
 
-    for (let i = splitedUrl.length; i >= 0; i--){
+    /* for (let i = splitedUrl.length; i >= 0; i--){
         if (splitedUrl[i] != undefined && splitedUrl[i] != ''){
             titleFull = splitedUrl[i];
             break;
         }
-    }
+    } */
 
-    titleFull = titleFull.substring(0,25);
+    titleFull = splitedUrl[1] + ' ' + splitedUrl[2];
+    titleFull = titleFull.substring(0,20);
 
     return titleFull;
 }
@@ -117,6 +120,9 @@ function editBookMark(event){
 document.querySelectorAll('.btn-edit').forEach((el) =>
 el.addEventListener('click', editBookMark));
 
+// removeAll.addEventListener('click', removeAllBookmarks);
+
+
 cancelEdit.addEventListener('click', function(e){
   document.getElementById("popup")
       .style.display = 'none';
@@ -183,7 +189,8 @@ saveBookMark.addEventListener("click", function(e){
     let pos = bookMarkList.length - 1;
     init();
     inputBookmark.value = '';
-    document.getElementById("popup").style.display = 'none';    
+    document.getElementById("popup").style.display = 'none';  
+    document.getElementById("popup-window").style.display = 'none';
 });
 
 
@@ -207,52 +214,7 @@ function cleanBookMarkList(){
 
 }
 
-function createCard(uuid, item){
-    // console.log(item);
-    //  let uuid = createUuid();
 
-    let link = document.createElement('a');
-    link.href = bookMarkList[item].url;
-    link.target = '_blank';
-
-    let card = document.createElement('div');
-    card.id = uuid;
-    card.classList.add('card');
-
-    let cardContent = document.createElement('div');
-    cardContent.classList.add('card-content');
-
-    let label = document.createElement('span');
-    label.classList.add('label');
-
-    let cardFooter = document.createElement('div');
-    cardFooter.classList.add('card-footer');
-
-    let editButton = document.createElement('button');
-    editButton.innerHTML = 'editar';
-    editButton.id = 'edit.' + uuid;
-    editButton.classList.add('btn-edit');
-    editButton.classList.add('btn-ctrl');
-
-
-    let removeButton = document.createElement('button');
-    removeButton.innerHTML = 'excluir';
-    removeButton.id = 'remove.' + uuid;
-    removeButton.classList.add('btn-rmv');
-    removeButton.classList.add('btn-ctrl');
-
-
-    label.innerHTML = bookMarkList[item].nome;
-
-    cardContent.appendChild(label);
-    link.appendChild(cardContent);
-    card.appendChild(link);
-    cardFooter.appendChild(editButton);
-    cardFooter.appendChild(removeButton);
-    card.appendChild(cardFooter);
-    // link.appendChild(card);
-    content.appendChild(card);
-}
 
 function createCard(item){
     // console.log(item);
@@ -309,3 +271,57 @@ function removeData(uuid){
     setBookMarkList();
 }
 
+function removeAllBookmarks (){
+    console.log('aaa');
+    bookMarkList = [];
+    setBookMarkList();
+    showBookMarkList();
+}
+
+/* 
+function createCard(uuid, item){
+    // console.log(item);
+    //  let uuid = createUuid();
+
+    let link = document.createElement('a');
+    link.href = bookMarkList[item].url;
+    link.target = '_blank';
+
+    let card = document.createElement('div');
+    card.id = uuid;
+    card.classList.add('card');
+
+    let cardContent = document.createElement('div');
+    cardContent.classList.add('card-content');
+
+    let label = document.createElement('span');
+    label.classList.add('label');
+
+    let cardFooter = document.createElement('div');
+    cardFooter.classList.add('card-footer');
+
+    let editButton = document.createElement('button');
+    editButton.innerHTML = 'editar';
+    editButton.id = 'edit.' + uuid;
+    editButton.classList.add('btn-edit');
+    editButton.classList.add('btn-ctrl');
+
+
+    let removeButton = document.createElement('button');
+    removeButton.innerHTML = 'excluir';
+    removeButton.id = 'remove.' + uuid;
+    removeButton.classList.add('btn-rmv');
+    removeButton.classList.add('btn-ctrl');
+
+
+    label.innerHTML = bookMarkList[item].nome;
+
+    cardContent.appendChild(label);
+    link.appendChild(cardContent);
+    card.appendChild(link);
+    cardFooter.appendChild(editButton);
+    cardFooter.appendChild(removeButton);
+    card.appendChild(cardFooter);
+    // link.appendChild(card);
+    content.appendChild(card);
+} */

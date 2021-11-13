@@ -156,14 +156,11 @@ body{
 }
 
 .content{
-    /* border: 1px solid #fff; */
-
     margin-top: 20px;
-
+    margin-bottom: 100px;
     display: grid;
     grid-template-columns: 180px 180px 180px 180px;
     grid-gap: 30px;
-
 }
 
 .content a {
@@ -214,6 +211,30 @@ body{
 .btn-ctrl{
     padding: 5px;
     width: 50%;
+}
+
+@media screen and (max-width: 850px){
+    .content{
+        display: grid;
+        grid-template-columns: 180px 180px 180px;
+        grid-gap: 30px;
+    }
+}
+
+@media screen and (max-width: 640px){
+    .content{
+        display: grid;
+        grid-template-columns: 180px 180px;
+        grid-gap: 30px;
+    }
+}
+
+@media screen and (max-width: 320px){
+    .content{
+        display: grid;
+        grid-template-columns: 180px;
+        grid-gap: 30px;
+    }
 }
 /* 
 @media screen and (max-width: 900px){
