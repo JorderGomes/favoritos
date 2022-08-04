@@ -1,13 +1,5 @@
 
 
-
-
-
-
-
-
-
-
 function getTitle(externalUrl){
   var proxyurl = "http:localhost/get_external_content.php?url=" + externalUrl;
   $.ajax({
