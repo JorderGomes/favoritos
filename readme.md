@@ -18,7 +18,7 @@ Página homepage
 ### ⚙️ Execução
 
 1. O sistema pode ser encontrado no link:
-[Favoritos](https://jordergomes.github.io/Maze)
+[Favoritos](https://jordergomes.github.io/favoritos/)
 
 ---
 
