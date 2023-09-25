@@ -207,7 +207,7 @@ saveBookMark.addEventListener("click", function(e){
 
 function showBookMarkList(){
     cleanBookMarkList();
-    bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList'));
+    bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList')) || [];
     bookMarkList.sort(function(a,b){
         return (a.qtdVisitas - b.qtdVisitas) * -1;
     });
