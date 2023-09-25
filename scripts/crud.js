@@ -1,14 +1,16 @@
 
-function BookMark(id, nome, url){
+function BookMark(id, nome, url, qtdVisitas){
     this.id = id;
     this.nome = nome;
     this.url = url;
+    this.qtdVisitas = qtdVisitas;
 }
 
 var bookMarkList = [];
 var bookMarkData;
 var content;
 var nome = '';
+var lastQtdVisits = 0;
 
 // Capturando botões
 var addLink = document.getElementById("add-link");
@@ -23,17 +25,10 @@ var saveEdit = document.getElementById("btn-save-edit");
 var inputBookmark = document.getElementById("new-bookmark-input");
 
 
-
 function getTitle (url){
     let splitedUrl = url.split('/');
     let titleFull = '';
 
-    /* for (let i = splitedUrl.length; i >= 0; i--){
-        if (splitedUrl[i] != undefined && splitedUrl[i] != ''){
-            titleFull = splitedUrl[i];
-            break;
-        }
-    } */
 
     titleFull = splitedUrl[1] + ' ' + splitedUrl[2];
     titleFull = titleFull.substring(0,20);
@@ -51,17 +46,11 @@ function init(){
     content = document.getElementById('main-content');
     if (!!(window.localStorage.getItem('bookMarkList'))) {
         bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList'));
-         console.log(bookMarkList); 
+         console.table(bookMarkList); 
     } else {
         bookMarkList = [];
-        //  console.log(bookMarkList);
     }
-    // getTitle();
-
-
-
-  
-
+    // setQtdVisitasZero();
     showBookMarkList();
 }
 init();
@@ -69,7 +58,6 @@ init();
 function setBookMarkList(){
     window.localStorage.setItem('bookMarkList', JSON.stringify(bookMarkList));
 }
-
 
 // Adicionando gatilhos
 // Flip modal 
@@ -86,9 +74,9 @@ cancelModal.addEventListener("click", function(e){
 
 });
 
+// crud bookmark
 function removeBookmark(event){
     let botao_remover = event.target;
-      console.log(botao_remover.id);
       let botao_remover_dados = botao_remover.id.split('.');
 
       let cardAtual = 
@@ -100,10 +88,30 @@ function removeBookmark(event){
 document.querySelectorAll('.btn-rmv').forEach((el) =>
 el.addEventListener('click', removeBookmark ));
 
+function incrementQtdVisits(event){
+    let link = event.target.parentElement.href;
+    for (let i in bookMarkList){
+        if(link == bookMarkList[i].url){
+            bookMarkList[i].qtdVisitas++;
+        }
+    }    
+    setBookMarkList(bookMarkList)
+    showBookMarkList()
+}
+
+function setQtdVisitas(id){
+    for(i in bookMarkList){
+        if (id == bookMarkList[i].id){
+            lastQtdVisits = bookMarkList[i].qtdVisitas;
+        }
+    }
+}
+
 function editBookMark(event){
     let botao_editar = event.target;
-    let botao_editar_dados = 
-        botao_editar.id.split('.');
+    let botao_editar_dados = botao_editar.id.split('.');
+    setQtdVisitas(botao_editar.id.split('.')[1]);
+
     let cardAtual = 
         document.getElementById(botao_editar_dados[1]);
 
@@ -132,11 +140,13 @@ cancelEdit.addEventListener('click', function(e){
 })
 
 saveEdit.addEventListener('click', function(e){
-  let newName = document.getElementById("edit-bookmark-name")
-  .value;
-  let newUrl = document.getElementById("edit-bookmark-link")
-  .value;
-  setData(bookMarkData.id, newName, newUrl);
+    let newName = document.getElementById("edit-bookmark-name")
+    .value;
+    let newUrl = document.getElementById("edit-bookmark-link")
+    .value;
+
+    setData(bookMarkData.id, newName, newUrl, lastQtdVisits);
+    lastQtdVisits = 0;
 
 });
 
@@ -149,7 +159,7 @@ function getDatabyId(id){
     }
 }
 
-function setData(id, nome, url){
+function setData(id, nome, url, qtdVisitas){
     let posicao;
     for (let i = 0; i < bookMarkList.length; i++){
         if (bookMarkList[i].id === id){
@@ -158,6 +168,8 @@ function setData(id, nome, url){
     }
     bookMarkList[posicao].nome = nome;
     bookMarkList[posicao].url = url;
+    bookMarkList[posicao].qtdVisitas = qtdVisitas;
+
     setBookMarkList();
     showBookMarkList();
     document.getElementById("popup")
@@ -172,10 +184,9 @@ function setData(id, nome, url){
 saveBookMark.addEventListener("click", function(e){
     let bookMark = inputBookmark.value;
     let bookMarkName = getTitle(bookMark);
-    // console.log(nome);
     let id = createUuid();
     let newBookMark = 
-    new BookMark(id, bookMarkName, bookMark);
+    new BookMark(id, bookMarkName, bookMark, 0);
 
     let link = document.createElement('a');
     link.href = bookMark;
@@ -194,16 +205,29 @@ saveBookMark.addEventListener("click", function(e){
 });
 
 
-
-
-
 function showBookMarkList(){
     cleanBookMarkList();
     bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList'));
+    bookMarkList.sort(function(a,b){
+        return (a.qtdVisitas - b.qtdVisitas) * -1;
+    });
     for (let item in bookMarkList){
+        
+        let id = bookMarkList[item].id;
+        let nome = bookMarkList[item].nome;
+        let url = bookMarkList[item].url;
+        let qtdVisitas = bookMarkList[item].qtdVisitas;
+
+        bookMarkList[item] = new BookMark(
+            id,
+            nome,
+            url,
+            qtdVisitas
+        );
+
         createCard(bookMarkList[item]);
     }
-
+    setBookMarkList();
 }
 
 function cleanBookMarkList(){
@@ -214,15 +238,11 @@ function cleanBookMarkList(){
 
 }
 
-
-
 function createCard(item){
-    // console.log(item);
-    //  let uuid = createUuid();
-
     let link = document.createElement('a');
     link.href = item.url;
     link.target = '_blank';
+    link.addEventListener('click', incrementQtdVisits)
 
     let card = document.createElement('div');
     card.id = item.id;
@@ -272,56 +292,29 @@ function removeData(uuid){
 }
 
 function removeAllBookmarks (){
-    console.log('aaa');
     bookMarkList = [];
     setBookMarkList();
     showBookMarkList();
 }
 
-/* 
-function createCard(uuid, item){
-    // console.log(item);
-    //  let uuid = createUuid();
+function setQtdVisitasZero(){
+    cleanBookMarkList();
+    bookMarkList = JSON.parse(window.localStorage.getItem('bookMarkList'));
+    for (let item in bookMarkList){
+        
+        let id = bookMarkList[item].id;
+        let nome = bookMarkList[item].nome;
+        let url = bookMarkList[item].url;
+        // let qtdVisitas = bookMarkList[item].qtdVisitas;
 
-    let link = document.createElement('a');
-    link.href = bookMarkList[item].url;
-    link.target = '_blank';
+        bookMarkList[item] = new BookMark(
+            id,
+            nome,
+            url,
+            0
+        );
 
-    let card = document.createElement('div');
-    card.id = uuid;
-    card.classList.add('card');
-
-    let cardContent = document.createElement('div');
-    cardContent.classList.add('card-content');
-
-    let label = document.createElement('span');
-    label.classList.add('label');
-
-    let cardFooter = document.createElement('div');
-    cardFooter.classList.add('card-footer');
-
-    let editButton = document.createElement('button');
-    editButton.innerHTML = 'editar';
-    editButton.id = 'edit.' + uuid;
-    editButton.classList.add('btn-edit');
-    editButton.classList.add('btn-ctrl');
-
-
-    let removeButton = document.createElement('button');
-    removeButton.innerHTML = 'excluir';
-    removeButton.id = 'remove.' + uuid;
-    removeButton.classList.add('btn-rmv');
-    removeButton.classList.add('btn-ctrl');
-
-
-    label.innerHTML = bookMarkList[item].nome;
-
-    cardContent.appendChild(label);
-    link.appendChild(cardContent);
-    card.appendChild(link);
-    cardFooter.appendChild(editButton);
-    cardFooter.appendChild(removeButton);
-    card.appendChild(cardFooter);
-    // link.appendChild(card);
-    content.appendChild(card);
-} */
+        // createCard(bookMarkList[item]);
+    }
+     setBookMarkList();
+}
