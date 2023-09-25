@@ -229,11 +229,16 @@ body{
     }
 }
 
-@media screen and (max-width: 320px){
+@media screen and (max-width: 450px){
     .content{
         display: grid;
-        grid-template-columns: 180px;
-        grid-gap: 30px;
+        grid-template-columns: 200px;
+        justify-items: center;
+        /* grid-gap: 30px; */
+    }
+
+    .card{
+        /* width: 100%; */
     }
 }
 /* 
