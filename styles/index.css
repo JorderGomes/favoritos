@@ -48,25 +48,25 @@ body{
     display: none;
 }
 
+
 #popup-window{
-    /* height: 100px; */
-    padding: 50px;
-    width: 500px;
-    border: 1px solid var(--border-modal); 
-    background-color: var(--bg-modal);
-    border-radius: 5px;
     display: none;
 }
 
 #popup-edit{
     display: none;
+}
+
+#popup-delete{
+    display: none;
+}
+
+.popup-style{
     padding: 50px;
     width: 500px;
     border: 1px solid var(--border-modal); 
     background-color: var(--bg-modal);
     border-radius: 5px;
-
-
 }
 
 .bookmark-input{
@@ -88,7 +88,7 @@ body{
     justify-content: flex-end;
 }
 
-#btn-save, #btn-save-edit{
+#btn-save, #btn-save-edit, #btn-remove-fav{
     margin-left: 15px;
 }
 
@@ -179,17 +179,21 @@ body{
     position: relative;
     width: 180px;
     height: 130px;
-    background-color: var(--background-card-content);
-    border-radius: 8px;
+    /* background-color: var(--background-card-content); */
+    /* border-radius: 8px; */
 
 }
 
 .card-content{
     width: 100%;
+    height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background-color: var(--background-card-content);
+    border-radius: 8px;
+
 }
 
 .card-content .label{
@@ -202,11 +206,22 @@ body{
 
 .card-footer{
     width: 100%;
+    height: 30px;
     display: flex;
     justify-content: space-evenly;
     position: absolute;
     bottom: 0;
+    display: none;
 }
+
+.link:hover + .card-footer{
+    display: flex;
+}
+
+.card-footer:hover{
+    display: flex;
+}
+
 
 .btn-ctrl{
     padding: 5px;

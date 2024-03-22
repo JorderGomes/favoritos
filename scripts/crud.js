@@ -11,6 +11,7 @@ var bookMarkData;
 var content;
 var nome = '';
 var lastQtdVisits = 0;
+var bookMarkToRemoveId = "";
 
 // Capturando botões
 var addLink = document.getElementById("add-link");
@@ -21,6 +22,8 @@ var cancelModal = document.getElementById("btn-cancel");
 
 var cancelEdit = document.getElementById("btn-cancel-edit");
 var saveEdit = document.getElementById("btn-save-edit");
+var cancelRemove = document.getElementById("btn-cancel-remove");
+var btnRemoveBookMark = document.getElementById("btn-remove-fav");
 
 var inputBookmark = document.getElementById("new-bookmark-input");
 
@@ -75,18 +78,29 @@ cancelModal.addEventListener("click", function(e){
 });
 
 // crud bookmark
+btnRemoveBookMark.addEventListener('click', removeBookmark)
 function removeBookmark(event){
-    let botao_remover = event.target;
-      let botao_remover_dados = botao_remover.id.split('.');
+    // let botao_remover = event.target;
+    // let botao_remover_dados = botao_remover.id.split('.');
 
-      let cardAtual = 
-          document.getElementById(botao_remover_dados[1]);
+    let cardAtual = 
+        document.getElementById(bookMarkToRemoveId);
 
-      content.removeChild(cardAtual);
-      removeData(botao_remover_dados[1]);
+    content.removeChild(cardAtual);
+    removeData(bookMarkToRemoveId);
+    hidePopupRemove();
+
 }
-document.querySelectorAll('.btn-rmv').forEach((el) =>
-el.addEventListener('click', removeBookmark ));
+
+function popupRemoveBookmark(event){
+    document.getElementById("popup").style.display = 'flex';
+    document.getElementById("popup-delete").style.display = 'block';
+    let botao_remover = event.target;
+    bookMarkToRemoveId = botao_remover.id.split('.')[1];
+}
+
+// document.querySelectorAll('.btn-rmv').forEach((el) =>
+// el.addEventListener('click', popupRemoveBookmark ));
 
 function incrementQtdVisits(event){
     let link = event.target.parentElement.href;
@@ -138,6 +152,15 @@ cancelEdit.addEventListener('click', function(e){
       .style.display = 'none';
 
 })
+
+cancelRemove.addEventListener('click', function (e) {
+    hidePopupRemove();
+})
+
+function hidePopupRemove(params) {
+    document.getElementById("popup").style.display = 'none';
+    document.getElementById("popup-delete").style.display = 'none';
+}
 
 saveEdit.addEventListener('click', function(e){
     let newName = document.getElementById("edit-bookmark-name")
@@ -240,6 +263,7 @@ function cleanBookMarkList(){
 
 function createCard(item){
     let link = document.createElement('a');
+    link.classList.add('link');
     link.href = item.url;
     link.target = '_blank';
     link.addEventListener('click', incrementQtdVisits)
@@ -269,7 +293,8 @@ function createCard(item){
     removeButton.id = 'remove.' + item.id;
     removeButton.classList.add('btn-rmv');
     removeButton.classList.add('btn-ctrl');
-    removeButton.addEventListener('click', removeBookmark);
+    removeButton.addEventListener('click', popupRemoveBookmark);
+    // removeButton.addEventListener('click', removeBookmark);
 
     label.innerHTML = item.nome;
 
