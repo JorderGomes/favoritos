@@ -5,7 +5,7 @@
 }
 
 :root{
-    --background-color: #2A2A2E;
+    --background-color: #0D1117;
     --danger-color: #dc3545;
     --background-color-hover: rgba(180, 180, 180, 0.2);
     --background-card-content: #38383D;
@@ -14,11 +14,17 @@
     --bg-modal: rgba(67, 67, 64, 1);
     --btn-outline-color: rgba(112, 176, 255, 0.9);
     --btn-outline-bg: rgba(67, 67, 64, 0.2);
+
+    --card-surface: #161B22;   /* Card escuro */
+    --accent-blue: #58A6FF;    /* Azul links favoritos */
+    --text-primary: #C9D1D9;
+    --border-color: #30363D;
+    --danger: #F85149;
 }
 
 body{
     background-color: var(--background-color);
-    font-family: sans-serif;
+    font-family: 'Inter', -apple-system, sans-serif;
     color: var(--card-text);
 }
 
@@ -26,16 +32,12 @@ body{
     border: 1px solid red;
 }
 
-.wrap{
-    /*width: 100vw; */
+.container{
     height: 100vh;
-    
     display: flex;
     justify-content: center;
     align-items: baseline;
-
     position: relative;
-
 }
 
 #popup{
@@ -48,7 +50,6 @@ body{
     align-items: center;
 
     background-color: rgba(0, 0, 0, 0.6);
-    /* background-color: var(--background-color); */
     display: none;
 }
 
@@ -118,6 +119,7 @@ body{
 
 .header .title{
     font-size: 32px;
+    font-weight: normal;
 }
 
 
@@ -183,9 +185,6 @@ body{
     position: relative;
     width: 180px;
     height: 130px;
-    /* background-color: var(--background-card-content); */
-    /* border-radius: 8px; */
-
 }
 
 .card-content{
@@ -205,7 +204,6 @@ body{
     text-align: center;
     font-size: 16px;
     word-wrap: break-word;
-
 }
 
 .card-footer{
@@ -276,3 +274,5 @@ body{
     
     }
 }
+
+/*  */
