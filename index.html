@@ -6,32 +6,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="img/star-solid-full.svg" type="image/x-icon">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"> -->
     <link rel="stylesheet" href="styles/index.css">
     <title>Home</title>
 </head>
 <body>
-    <main class="wrap">
-
-        <div class="main">
-            <div class="header">
-                <p class="title">
-                    Favoritos
-                </p>
+    <main class="container">
+        <article class="main">
+            <header class="header">
+                <h1 class="title">Favoritos</h1>
                 <div>
                     <button id="add-link" class="btn-primary btn-add">+</button>
-                    <!-- <button id="remove-all" class="btn-primary btn-rm">-</button>     -->
                 </div>
-            
-            </div>
-            
-            <section id="main-content" class="content">
-                
-            </section>
-
-            
-        </div>
-
-        
+            </header>
+            <section id="main-content" class="content"></section>
+        </article>
 
         <div id="popup">
             <div id="popup-window" class="popup-style">
@@ -81,7 +70,6 @@
                 </div>
             </div>
         </div>
-        
     </main>
 
     <a href="https://forms.gle/yUvHxWkzHZfaAtZV6" target="_blank" class="red feedback-link">
@@ -90,6 +78,6 @@
 
     <script src="scripts/jquery.js"></script>
     <script src="https://kit.fontawesome.com/d49239e0c9.js" crossorigin="anonymous"></script>
-    <script src="scripts/crud.js"></script>
+    <script src="scripts/app.js"></script>
 </body>
 </html>
